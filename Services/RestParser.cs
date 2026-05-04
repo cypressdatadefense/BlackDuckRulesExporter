@@ -53,8 +53,14 @@ public static class RestParser
 
     private static async Task<PoliciesResponse> FetchPageAsync(string host, int offset)
     {
-        var url = $"{host}/api/policies?offset={offset}&limit={PageSize}";
-        var json = await Http.GetStringAsync(url);
+        var url = $"{host}/api/policy-rules?offset={offset}&limit={PageSize}";
+        using var req = new HttpRequestMessage(HttpMethod.Get, url);
+        req.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/vnd.blackducksoftware.policy-5+json"));
+
+        using var resp = await Http.SendAsync(req);
+        resp.EnsureSuccessStatusCode();
+
+        var json = await resp.Content.ReadAsStringAsync();
         return JsonSerializer.Deserialize<PoliciesResponse>(json, JsonOptions)
             ?? throw new InvalidOperationException("Empty response from Black Duck API.");
     }
