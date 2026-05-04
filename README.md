@@ -2,7 +2,9 @@
 
 Exports Black Duck Rules
 
+``` BASH
 Usage: BlackDuckRulesExporter <blackduck-url> <api-token> [--json]
+```
 
 * You will need an API TOKEN from Black Duck to use this app.
 
@@ -20,7 +22,9 @@ Usage: BlackDuckRulesExporter <blackduck-url> <api-token> [--json]
 
 * You can test your token with:
 
+``` BASH
 curl -X POST \ 
 https://< server URL>/api/tokens/authenticate \
 -H "Accept: application/vnd.blackducksoftware.user-4+json" \
 -H "Authorization: token <api-token>"
+```
